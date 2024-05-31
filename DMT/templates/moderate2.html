@@ -1,0 +1,85 @@
+{% extends 'base-home.html' %}
+{% load static %}
+{% block content %}
+            <div class="form">
+                <form  method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <br>
+                    <label class="col-md-003" >Select Vehicle Category</label>
+                    <select name="category" class="slect_">
+                     <!--   <option  selected="selected" disabled>Choose here</option>
+                                  {% for category in vehicle_category %}
+                                  <option value="{{category}}" >{{category}}</option>
+                               {% endfor %} -->
+                        <option  selected="selected" disabled>Choose here</option>
+                        <option value="Cars">Cars</option>
+                        <option value="Vans">Vans</option>
+                        <option value="SUVs">SUVs</option>
+                        <option value="Motor Bike">Motor Bike</option>
+                    </select>
+
+                    <label class="col-md-003" >Select Vehicle Make</label> <br>
+                    <input type="text" name="make">
+                 <!--    <select name="name_make" class="slect_">
+                    <option selected="selected" disabled>Choose here</option>
+                        {% for make in vehicle_make %}
+                        <option value="{{make}}" name="RB_make">{{make}}</option>
+                    {% endfor %}
+                    </select> -->
+
+                    <label class="col-md-003" >Select Vehicle Model</label> <br>
+                    <input type="text" name="model">
+                    <!--
+                    <select name="name_model" class="slect_">
+                        <option selected="selected" disabled>Choose here</option>
+                        {% for model in vehicle_model %}
+                        <option value="{{model}}" name="RB_model">{{model}}</option>
+                    {% endfor %}
+                    </select>
+                       -->
+                    <label class="col-md-003" >Select Year</label> <br>
+                    <input type="text" name="year">
+                    <!--
+                    <select name="name_year" class="slect_">
+                        <option selected="selected" disabled>Choose here</option>
+                        {% for year in vehicle_year %}
+                        <option value="{{year}}" name="RB_year">{{year}}</option>
+                    {% endfor %}
+                    </select>
+                    -->
+                    <label class="col-md-003" >Enter milage(Km)</label> <br>
+                    <input type="text" name="milage">
+
+                    <!--milage-->
+                    <label class="col-md-003" >Fuel Type</label> <br>
+                    <select name="fuel_category" class="slect_">
+                        <option  selected="selected" disabled>Choose here</option>
+                        <option value="Petrol">Petrol</option>
+                        <option value="Diesel">Diesel</option>
+                        <option value="Hybrid">Hybrid</option>
+                    </select>
+
+                    <!--fuel type-->
+                    <label class="col-md-003" >Enter Gear Type</label><br>
+                    <select name="gear_category" class="slect_">
+                        <option  selected="selected" disabled>Choose here</option>
+                        <option value="Auto">Auto</option>
+                        <option value="Manual">Manual</option>
+                    </select>
+
+                    <!--engine-->
+                    <label class="col-md-003" >Enter engine capacity (cc)</label> <br>
+                    <input type="text" name="capacity">
+
+                    <label class="col-md-003" >Location</label> <br>
+                    <input type="text" name="location">
+
+                    <label class="col-md-003" >Price(Rs.)</label> <br>
+                    <input type="text" name="price">
+                    <br><br>
+
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+{% endblock %}

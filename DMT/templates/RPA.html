@@ -1,0 +1,73 @@
+{% extends 'base-home.html' %}
+{% load static %}
+{% block content %}
+            <div class="form">
+                <form method="POST" enctype="multipart/form-data" style="width: 40%; margin-left: 20px;" id="RPA-form">
+                    {% csrf_token %}
+                    
+                    <br><br>
+                    <label for="fname">License Plate Number</label>
+                    <input type="text" name="Numberplate">
+                    <br/>
+                    <input type="button" value="Submit" id="RPA-submit">
+                </form>
+            </div>
+            
+            <div class="output">
+                <div class="{{alert_type}}">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    {{alert_msg}}
+                </div>
+                
+                <div class="row">
+
+
+                    {% if Report_Date is not None %}
+                    <div >
+                        <div >
+                                <h2>Details verification through DMT website:</h2>
+                                
+                                <br>
+                                <p class="lorem_text"><b>{{Report_Date}}</b></p>
+                                <p class="lorem_text"><b>{{VehicleRegistrationNumber}}</b></p>
+                                <p class="lorem_text"><b>Name of the absolute ownership/ mortgage if any    :</b>{{ownership}}</p>
+                                <p class="lorem_text"><b>Engine number                                      :</b>{{EngineNumber}}</p>
+                                <p class="lorem_text"><b>Vehicle class                                      :</b>{{VehicleClass}}</p>
+                                <p class="lorem_text"><b>Conditions and notes                               :</b>{{ConditionsNotes}}</p>
+                                <p class="lorem_text"><b>Make                                               :</b>{{Make}}</p>
+                                <p class="lorem_text"><b>Model                                              :</b>{{Model}}</p>
+                                <p class="lorem_text"><b>Year of manufacture                                :</b>{{ManufacturedYear}}</p>
+
+                               <!-- <a href="autu_valuation.html?make={{Make}}">  <input type="button" value="Submit"></a> -->
+                            
+                        </div>
+                    </div>
+                    {% endif %}
+
+                </div>
+
+               
+
+
+            </div>
+            {% endblock %}
+
+            
+        {% block scpt %}    
+        <script>
+ 
+            document.getElementById("RPA-submit").addEventListener("click", function (){
+                
+                showLoader();
+                var form = document.getElementById("RPA-form");
+
+                form.submit();
+                
+            });
+
+            
+
+
+        </script>
+       
+        {% endblock %}

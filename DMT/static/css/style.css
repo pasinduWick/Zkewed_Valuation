@@ -1,0 +1,374 @@
+body {
+  font-family: Sans-serif;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/*############### SIDE NAV BAR #################*/
+/* The side navigation menu */
+.sidebar {
+    margin: 0;
+    padding: 0;
+    min-width: 200px;
+    background-color: #f1f1f1;
+    /* position: fixed; */
+    height: auto;
+    overflow: auto;
+  }
+  
+  /* Sidebar links */
+  .sidebar a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+  } 
+  .sidebar h2 {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+  }
+  
+  /* Active/current link */
+  .sidebar a.active {
+    background-color: #ed9902;
+    color: white;
+  }
+  
+  /* Links on mouse-over */
+  .sidebar a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+  }
+  
+  /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
+  div.content {
+    /* margin-left: 200px; */
+    padding: 0px 10px;
+    height: 100%;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+  }
+  
+  /* On screens that are less than 700px wide, make the sidebar into a topbar */
+  @media screen and (max-width: 850px) {
+    .sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+    }
+    .sidebar a {float: left;}
+    div.content {margin-left: 0;}
+  }
+  
+  /* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+  @media screen and (max-width: 400px) {
+    .sidebar a {
+      text-align: center;
+      float: none;
+    }
+  }
+
+/*############### FORM #################*/
+.form {
+    margin: 0;
+    padding: 10px;
+    min-width: 300px;
+    background-color: #f1f1f1;
+    /* position: fixed; */
+    height: 30%;
+    /* overflow: auto; */
+    justify-content: space-between;
+  }
+
+  /* #dmt-form{
+
+    display: none;
+  } */
+  #alert-matching {
+    display: none;
+  }
+
+  .spinner-container{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.8);
+  }
+
+  .loader-deactivate{
+    display: none;
+  }
+
+  .form > form{
+    display: flex;
+    flex-direction: column;
+  }
+  .form-box{
+    display: flex;
+    /* align-items: flex-end; */
+    justify-content: flex-start;
+    /* flex-direction: column; */
+    margin: 10px 0;
+  }
+  .form-box-dmt{
+    display: flex;
+    /* align-items: flex-end; */
+    justify-content: center;
+    /* flex-direction: column; */
+    margin: 0 0 10px 0;
+  }
+
+  .form-box-valuation{
+    display: flex;
+    /* align-items: flex-end; */
+    justify-content: center;
+    flex-direction: column;
+    /* margin: 10px 0; */
+  }
+
+  .form-box > div{
+    width: 50%;
+    display: flex;
+    /* align-items: flex-end; */
+    justify-content: space-between;
+    /* flex-direction: column; */
+  }
+
+  .valFormBox {
+
+    flex-direction: column;
+    padding: 0 40px 0 20px ;
+    justify-content: start;
+  }
+  
+  /* Style inputs */
+  .form-box > input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc; 
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  .form-box-valuation > input[type=text], select {
+    width: 100%;
+    padding: 4px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  /* Style the submit button */
+  input[type=submit] {
+    width: 20%;
+    background-color: #ed9902;
+    color: white;
+    /* padding: 14px 20px; */
+    /* margin: 8px 0; */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 60%;
+  }
+
+  input[type=button] {
+    width: 20%;
+    background-color: #ed9902;
+    color: white;
+    /* padding: 14px 20px; */
+    /* margin: 8px 0; */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 60%;
+  }
+
+  .btn-val{
+    width: 20%;
+    background-color: #ed9902;
+    color: white;
+    /* padding: 14px 20px; */
+    /* margin: 8px 0; */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 60%;
+  }
+  
+  /* Add a background color to the submit button on mouse-over */
+  input[type=submit]:hover {
+    background-color: #ed9902;
+  }
+
+    /* On screens that are less than 700px wide, make the sidebar into a topbar */
+    @media screen and (max-width: 850px) {
+        .form {
+            padding: 0;
+          width: 100%;
+          height: auto;
+          position: relative;
+        }
+        form {padding:8px;}
+        div.content {padding: 0;padding-top: 10px;}
+      }
+
+/*############ OUTPUT  ############*/
+.output {
+    padding: 10px;
+    height: 100%;
+    display: flex;
+    /* margin-left: 320px; */
+    width: 100%;
+    overflow: scroll;
+    /* justify-content: center; */
+    flex-direction: column;
+}
+
+    /* On screens that are less than 700px wide, make the sidebar into a topbar */
+    @media screen and (max-width: 850px) {
+        div.output {margin-left: 0;}
+      }
+
+.results{
+  display: flex;
+  flex-direction: column;
+}
+/*############ CARDS  ############*/
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  
+}
+
+
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+  padding: 2px 16px;
+}
+
+/* Float four columns side by side */
+.column {
+  float: left;
+  /* width: 40%; */
+  padding: 0 10px;
+  padding-bottom: 10px;
+}
+
+
+
+/* Remove extra left and right margins, due to padding in columns */
+.rows {
+  margin: 0 -5px;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the counter cards */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+  padding: 16px;
+  background-color: #f1f1f1;
+  width: 90%;
+}
+.v-img > img{
+  
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.v-img{
+  
+  width: 420px;
+  height: 420px;
+}
+
+
+/* Responsive columns - one column layout (vertical) on small screens */
+@media screen and (max-width: 1000px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+
+/*#################### The alert message box ####################*/
+.alert-matching {
+  padding: 20px;
+  background-color: #04AA6D; /* green */
+  color: white;
+  margin-bottom: 15px;
+}
+
+.alert-not-matching {
+  padding: 20px;
+  background-color: #f44336; /* green */
+  color: white;
+  margin-bottom: 15px;
+}
+
+.alert-nodata {
+  padding: 20px;
+  background-color: #ff9800; /* green */
+  color: white;
+  margin-bottom: 15px;
+}
+
+.alert-full-matching {
+  padding: 20px;
+  background-color: #ff9800; /* green */
+  color: white;
+  margin-bottom: 15px;
+}
+
+/* The close button */
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+  color: black;
+}
+
+.advanced-facts > span{
+  border: 1px solid;
+  padding: 5px 10px;
+  border-radius: 20px;
+  margin: 0 10px 0 0;
+  font-size: small;
+}
+

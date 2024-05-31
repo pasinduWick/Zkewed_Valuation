@@ -1,0 +1,555 @@
+{% extends 'base-home.html' %}
+{% load static %}
+{% block content %}
+            <div class="form" style="height: 43%;">
+                
+                <form  method="POST" enctype="multipart/form-data" id="valuation-form">
+                    {% csrf_token %}
+
+                    <div class="form-box">
+                        <div class="valFormBox">
+
+                            <label class="col-md-003" >Select Vehicle Category</label>
+                            <select name="name_category" class="slect_" id="category" onchange="selectedCategory()">
+                                <option  selected="selected" disabled>Choose here</option>
+                                {% for category in vehicle_category %}
+                                <option value="{{category}}" {% if category == selected_Category %} selected {% endif %} >{{category}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="valFormBox">
+
+                            <label class="col-md-003" >Select Vehicle Make</label>
+                            <select name="name_make" class="slect_">
+                                <option selected="selected" disabled>Choose here</option>
+                                {% for make in vehicle_make %}
+                            
+                                <option value="{{make}}" name="RB_make" {% if make == selected_Make %} selected {% endif %}>{{make}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-box">
+                        <div class="valFormBox">
+                            <label class="col-md-003" >Select Vehicle Model</label> 
+                            <select name="name_model" class="slect_">
+                                <option selected="selected" disabled>Choose here</option>
+                                {% for model in vehicle_model %}
+                                <option value="{{model}}" name="RB_model"{% if model == selected_Model %} selected {% endif %}>{{model}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="valFormBox">
+                            <label class="col-md-003" >Select Year</label> 
+                            <select name="name_year" class="slect_">
+                                <option selected="selected" disabled>Choose here</option>
+                                {% for year in vehicle_year %}
+                                <option value="{{year}}" name="RB_year" {% if year == selected_Year %} selected {% endif %}>{{year}}</option>
+                                {% endfor %}
+                            </select> 
+                        </div>
+                    </div>
+                    
+                    <div class="form-box" style="align-items: flex-end; justify-content: space-between; padding-right: 5%;">
+                        <div class="valFormBox" >
+                            <label class="col-md-003" >Purpose of valuation</label> 
+                            <div style="display: flex; gap: 40px;">
+                        
+                                <div>
+
+                                    <input type="radio" id="" name="purpose" {% if selected_purpose is not None %} value="{{selected_purpose}}" {% else %} value="Buying" {% endif %}>
+                                    <label for="html">Buying</label><br>
+                                </div>
+                                <div>
+                                    
+                                    <input type="radio" id="" name="purpose" {% if selected_purpose is not None %} value="{{selected_purpose}}" {% else %} value="Selling" {% endif %}>
+                                    <label for="html">Selling</label><br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="valFormBox">
+                            
+                        </div>
+                        <input type="text" name="is_advanced" value="false" style="display: none;">
+                        <input type="text" name="is_feedback" value="false" style="display: none;"> 
+                        <input type="button" value="Submit" style="margin-left: 20px;" id="valuation-form-submit">
+                    </div>
+                </form>
+
+            </div>
+
+            <div class="output">
+                <div class="{{alert_type}}">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    {{alert_msg}}
+                </div>
+   
+                <div class="row">
+
+
+                    {% if result_status is not None %}
+                    <div class="column" style="display: flex; justify-content: center;">
+
+                    
+                    <div class="accordion" id="accordionExample" style="width: 90%;">
+                        <div class="accordion-item" style="height: 100%;">
+                          <h2 class="accordion-header" style="border: none">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="    color: unset; background-color: unset; box-shadow: none;">
+                              Advance Valuation
+                            </button>
+                          </h2>
+                          <div id="collapseOne" {% if result_status == 'Advanced Valuation Processed'%}class="accordion-collapse collapse"{% else %}class="accordion-collapse collapse show"{% endif %} data-bs-parent="#accordionExample">
+                            <div class="accordion-body" style="padding: 0;">
+
+                                <!-- <div class="column" style="display: flex; justify-content: center;"> -->
+                                    <div class="card" style="width: 100%;box-shadow: none; border: none;">
+                                        <div style="text-align: center;">
+            
+                                            <h2>Do you want more accurate result...?</h2>
+                                            <div style="text-align: left; width: fit-content; margin: auto;">
+                                                <p>Many factors can affect on your Vehicle's valuation price,  </p>
+                                                <div class="advanced-facts" style="margin: 10px 0;">
+                                                    <span>Mileage</span>
+                                                    <span>Engine Capacity</span>
+                                                    <span>Fuel Type</span>
+                                                    <span>Transmission Type</span>
+                                                </div>
+                                                <p>Provide more detais to get more accurate valuation...  </p>
+                                                <input type="button" id="Valuation" value="Advanced Valuation" data-bs-toggle="modal" data-bs-target="#valuation-conf-modal" style="width: fit-content;">
+                                                <!-- <input type="button" id="Valuation" value="Advanced Valuation2" data-bs-toggle="modal" data-bs-target="#feedback-modal" style="width: fit-content;"> -->
+                                            </div>
+                                            
+                                            <br>
+                                        </div>
+                                        
+                                    </div>
+                                <!-- </div> -->
+
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    
+                    
+
+
+                    <div class="column" style="display: flex; justify-content: center;">
+                        <div class="card" style="margin-bottom: 40px;">
+                            <div style="text-align: center;">
+
+                                <h2>Vehical Valuation</h2>
+                                
+                                <br>
+                            </div>
+                            <div style="display: flex; flex-direction: row; justify-content: space-around; gap: 40px;">
+
+                                <div>
+
+                                    <p class="lorem_text"><b>Vehicle Category :</b>{{selected_Category}}</p> 
+                                    <p class="lorem_text"><b>Vehicle Make :</b>{{selected_Make}}</p> 
+                                    <p class="lorem_text"><b>Vehicle Model :</b>{{selected_Model}}</p> 
+                                    <p class="lorem_text"><b>Vehicle Engine Capacity :</b>{{selected_Engine_Capacity}}</p> 
+                                    <p class="lorem_text"><b>Vehicle Year :</b>{{selected_Year}}</p>
+                                    <p class="lorem_text"><b>Vehicle Mileage Range Considered :</b>{{Mileage_Range}}</p> <br>
+                                </div>
+                                <div>
+
+                                    <p class="lorem_text"><b>Vehicle valuation amount (Rs.) :</b>{{valuation_amount}}</p>
+                                    <p class="lorem_text"><b>Maximum amount (Rs.)  :</b>{{Maximum_amount}}</p>
+                                    <p class="lorem_text"><b>Minimum amoun t(Rs.)  :</b>{{Minimum_amount}}</p>
+                                    <p class="lorem_text"><b>Mode amount (Rs.)  :</b>{{Mode_amount}}</p>
+                                    <p class="lorem_text"><b>Moderator valuation amount (Rs.)  :</b>{{Moderator_amount}}</p> <br>
+                                </div>
+                            </div>
+                            <div class="form" id="dmt-form" style="background-color: white;">
+                                <h4 style="padding-left: 5%;">How is our valuation accuracy?</h4 style="margin-left: 5%;">
+                                <div style="display: flex; gap: 40%; margin-left: 5%;">
+
+                                <form  method="POST" enctype="multipart/form-data" id="feedback-form" style="display: flex; flex-direction: row;">
+                                    {% csrf_token %}
+    
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="feedbackIn" id="inlineRadio1" value="Poor">
+                                        <label class="form-check-label" for="inlineRadio1">Poor</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="feedbackIn" id="inlineRadio2" value="Average">
+                                        <label class="form-check-label" for="inlineRadio2">Average</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="feedbackIn" id="inlineRadio2" value="Accurate">
+                                        <label class="form-check-label" for="inlineRadio2">Accurate</label>
+                                    </div>
+                
+    
+                                    <div class="form-box" style="display: none;">
+                                        <div class="valFormBox">
+                
+                                            <label class="col-md-003" >Select Vehicle Category</label>
+                                            <select name="name_category" class="slect_" id="category" onchange="selectedCategory()">
+                                                
+                                                {% for category in vehicle_category %}
+                                                <option value="{{category}}" {% if category == selected_Category %} selected {% endif %} >{{category}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="valFormBox">
+                
+                                            <label class="col-md-003" >Select Vehicle Make</label>
+                                            <select name="name_make" class="slect_">
+                                                {% for make in vehicle_make %}
+                                            
+                                                <option value="{{make}}" name="RB_make" {% if make == selected_Make %} selected {% endif %}>{{make}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                
+                                    <div class="form-box" style="display: none;">
+                                        <div class="valFormBox">
+                                            <label class="col-md-003" >Select Vehicle Model</label> 
+                                            <select name="name_model" class="slect_">
+                
+                                                {% for model in vehicle_model %}
+                                                <option value="{{model}}" name="RB_model" {% if model == selected_Model %} selected {% endif %}>{{model}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="valFormBox">
+                                            <label class="col-md-003" >Select Year</label> 
+                                            <select name="name_year" class="slect_">
+                
+                                                {% for year in vehicle_year %}
+                                                <option value="{{year}}" name="RB_year" {% if year == selected_Year %} selected {% endif %}>{{year}}</option>
+                                                {% endfor %}
+                                            </select> 
+                                        </div>
+                                    </div>
+                                    <div class="form-box" style="display: none;">
+                                        <input type="text" name="Maximum_amount" value={{Maximum_amount}}>
+                                        <input type="text" name="Minimum_amount" value={{Minimum_amount}}>
+                                        <input type="text" name="Mode_amount" value={{Mode_amount}}>
+                                        <input type="text" name="Mileage_Range" value={{Mileage_Range}}>
+                                        <input type="text" name="Moderator_amount" value={{Moderator_amount}}>
+
+                                        
+                                    </div>
+
+
+                                    <input type="text" name="is_feedback" value="true" style="display: none;"> 
+                                    <input type="text" name="purpose" value={{selected_purpose}} style="display: none;">
+                                    <input type="text" name="is_advanced" value="true" style="display: none;">
+                                </form>
+                                <button type="button" class="btn-val" id="feedback-submit">Proceed</button>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+
+            </div>
+
+            <!-- advanced modal -->
+            <div class="modal fade" id="valuation-conf-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Advanced Valuation</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+    
+                        <div class="form" id="dmt-form" style="background-color: white;">
+                            <form  method="POST" enctype="multipart/form-data" id="advanced-valuation-form">
+                                {% csrf_token %}
+            
+                                <div style="width: fit-content; margin: auto;">
+
+                                    <p class="lorem_text"><b>Vehicle Category :</b>{{selected_Category}}</p> 
+                                    <p class="lorem_text"><b>Vehicle Make :</b>{{selected_Make}}</p> 
+                                    <p class="lorem_text"><b>Vehicle Model :</b>{{selected_Model}}</p> 
+                                    <p class="lorem_text"><b>Vehicle Year :</b>{{selected_Year}}</p> <br>
+                                </div>
+
+                                <div class="form-box" style="display: none;">
+                                    <div class="valFormBox">
+            
+                                        <label class="col-md-003" >Select Vehicle Category</label>
+                                        <select name="name_category" class="slect_" id="category" onchange="selectedCategory()">
+                                            <!-- <option  selected="selected" disabled>Choose here</option> -->
+                                            {% for category in vehicle_category %}
+                                            <option value="{{category}}" {% if category == selected_Category %} selected {% endif %} >{{category}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="valFormBox">
+            
+                                        <label class="col-md-003" >Select Vehicle Make</label>
+                                        <select name="name_make" class="slect_">
+                                            {% for make in vehicle_make %}
+                                        
+                                            <option value="{{make}}" name="RB_make" {% if make == selected_Make %} selected {% endif %}>{{make}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+            
+                                <div class="form-box" style="display: none;">
+                                    <div class="valFormBox">
+                                        <label class="col-md-003" >Select Vehicle Model</label> 
+                                        <select name="name_model" class="slect_">
+            
+                                            {% for model in vehicle_model %}
+                                            <option value="{{model}}" name="RB_model" {% if model == selected_Model %} selected {% endif %}>{{model}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="valFormBox">
+                                        <label class="col-md-003" >Select Year</label> 
+                                        <select name="name_year" class="slect_">
+            
+                                            {% for year in vehicle_year %}
+                                            <option value="{{year}}" name="RB_year" {% if year == selected_Year %} selected {% endif %}>{{year}}</option>
+                                            {% endfor %}
+                                        </select> 
+                                    </div>
+                                </div>
+                                <div class="form-box">
+                                    <div class="valFormBox">
+                                        <label class="col-md-003" >Vehicle Milage</label> 
+                                        <input type="number" name="milage" value="vehicle_milage">
+                                    </div>
+                                    <div class="valFormBox">
+                                        <label class="col-md-003" >Vehicle Gear Type</label> 
+                                        <select name="gear_type" class="slect_">
+            
+                                            <option  disabled selected>Choose here</option>
+                                            <option value="Manual" name="RB_year" {% if vehicle_gear == "Manual" %} selected {% endif %}>Manual</option>
+                                            <option value="Automatic" name="RB_year" {% if vehicle_gear == "Automatic" %} selected {% endif %}>Automatic</option>
+            
+                                        </select> 
+                                    </div>
+                                </div>
+                                <div class="form-box">
+                                    <div class="valFormBox">
+                                        <label class="col-md-003" >Vehicle Engine Capacity</label> 
+                                        <input type="number" name="engine_capacity" value="vehicle_engine_capacity">
+                                    </div>
+                                    <div class="valFormBox">
+                                        <label class="col-md-003" >Vehicle Fuel Type</label> 
+                                        <select name="fuel_type" class="slect_">
+            
+                                            <option  disabled selected>Choose here</option>
+                                            <option value="Petrol" name="RB_year" {% if vehicle_fuel_type == 'Petrol' %} selected {% endif %}>Petrol</option>
+                                            <option value="Diesel" name="RB_year" {% if vehicle_fuel_type == 'Diesel' %} selected {% endif %}>Diesel</option>
+                                            <option value="Hybrid" name="RB_year" {% if vehicle_fuel_type == 'Hybrid' %} selected {% endif %}>Hybrid</option>
+            
+                                        </select> 
+                                    </div>
+                                </div>
+                                <input type="text" name="is_advanced" value="true" style="display: none;">
+                                <input type="text" name="is_feedback" value="false" style="display: none;"> 
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn-val" data-bs-dismiss="modal" style="background-color: darkgray;">Close</button>
+                      <button type="button" class="btn-val" id="advanced-Valuation-submit">Proceed</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <!-- feedback modal -->
+            <div class="modal fade" id="feedback-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="staticBackdropLabel">How is our valuation accuracy?</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+    
+                        <div class="form" id="dmt-form" style="background-color: white;">
+                            <form  method="POST" enctype="multipart/form-data" id="feedback-form" style="display: flex; flex-direction: row;">
+                                {% csrf_token %}
+
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Poor">
+                                    <label class="form-check-label" for="inlineRadio1">Poor</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Average">
+                                    <label class="form-check-label" for="inlineRadio2">Average</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Accurate">
+                                    <label class="form-check-label" for="inlineRadio2">Accurate</label>
+                                </div>
+            
+                                <!-- <div style="width: fit-content; margin: auto;">
+
+                                    <p class="lorem_text"><b>Vehicle Category :</b>{{selected_Category}}</p> 
+                                    <p class="lorem_text"><b>Vehicle Make :</b>{{selected_Make}}</p> 
+                                    <p class="lorem_text"><b>Vehicle Model :</b>{{selected_Model}}</p> 
+                                    <p class="lorem_text"><b>Vehicle Year :</b>{{selected_Year}}</p> <br>
+                                </div>
+
+                                <div class="form-box" style="display: none;">
+                                    <div class="valFormBox">
+            
+                                        <label class="col-md-003" >Select Vehicle Category</label>
+                                        <select name="name_category" class="slect_" id="category" onchange="selectedCategory()">
+                                            
+                                            {% for category in vehicle_category %}
+                                            <option value="{{category}}" {% if category == selected_Category %} selected {% endif %} >{{category}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="valFormBox">
+            
+                                        <label class="col-md-003" >Select Vehicle Make</label>
+                                        <select name="name_make" class="slect_">
+                                            {% for make in vehicle_make %}
+                                        
+                                            <option value="{{make}}" name="RB_make" {% if make == selected_Make %} selected {% endif %}>{{make}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+            
+                                <div class="form-box" style="display: none;">
+                                    <div class="valFormBox">
+                                        <label class="col-md-003" >Select Vehicle Model</label> 
+                                        <select name="name_model" class="slect_">
+            
+                                            {% for model in vehicle_model %}
+                                            <option value="{{model}}" name="RB_model" {% if model == selected_Model %} selected {% endif %}>{{model}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="valFormBox">
+                                        <label class="col-md-003" >Select Year</label> 
+                                        <select name="name_year" class="slect_">
+            
+                                            {% for year in vehicle_year %}
+                                            <option value="{{year}}" name="RB_year" {% if year == selected_Year %} selected {% endif %}>{{year}}</option>
+                                            {% endfor %}
+                                        </select> 
+                                    </div>
+                                </div>
+                                <div class="form-box">
+                                    <div class="valFormBox">
+                                        <label class="col-md-003" >Vehicle Milage</label> 
+                                        <input type="number" name="milage" value="vehicle_milage">
+                                    </div>
+                                    <div class="valFormBox">
+                                        <label class="col-md-003" >Vehicle Gear Type</label> 
+                                        <select name="gear_type" class="slect_">
+            
+                                            <option  disabled selected>Choose here</option>
+                                            <option value="Manual" name="RB_year" {% if vehicle_gear == "Manual" %} selected {% endif %}>Manual</option>
+                                            <option value="Automatic" name="RB_year" {% if vehicle_gear == "Automatic" %} selected {% endif %}>Automatic</option>
+            
+                                        </select> 
+                                    </div>
+                                </div>
+                                <div class="form-box">
+                                    <div class="valFormBox">
+                                        <label class="col-md-003" >Vehicle Engine Capacity</label> 
+                                        <input type="number" name="engine_capacity" value="vehicle_engine_capacity">
+                                    </div>
+                                    <div class="valFormBox">
+                                        <label class="col-md-003" >Vehicle Fuel Type</label> 
+                                        <select name="fuel_type" class="slect_">
+            
+                                            <option  disabled selected>Choose here</option>
+                                            <option value="Petrol" name="RB_year" {% if vehicle_fuel_type == 'Petrol' %} selected {% endif %}>Petrol</option>
+                                            <option value="Diesel" name="RB_year" {% if vehicle_fuel_type == 'Diesel' %} selected {% endif %}>Diesel</option>
+                                            <option value="Hybrid" name="RB_year" {% if vehicle_fuel_type == 'Hybrid' %} selected {% endif %}>Hybrid</option>
+            
+                                        </select> 
+                                    </div>
+                                </div>
+                                <input type="text" name="is_advanced" value="true" style="display: none;"> -->
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn-val" data-bs-dismiss="modal" style="background-color: darkgray;">Close</button>
+                      <button type="button" class="btn-val" id="advanced-Valuation-submit">Proceed</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+{% endblock %}
+{% block scpt %}    
+<script>
+
+// window.onload = function() { 
+//     var vehicle_data_obj = {{vehicle_make_test|safe}};
+//     console.log("Type of vehicle_make_test:", typeof {{ vehicle_make_test|safe }});
+//     // var parsedData = JSON.parse(jsonDatav);
+//     console.log(vehicle_data_obj.length);
+//     console.log("First Make Property:", vehicle_data_obj[0].make);
+// }
+
+
+document.getElementById("valuation-form-submit").addEventListener("click", function (){
+                
+                showLoader();
+                var form = document.getElementById("valuation-form");
+
+                form.submit();
+                
+            });
+
+
+document.getElementById("advanced-Valuation-submit").addEventListener("click", function (){
+
+        showLoader();
+        var form = document.getElementById("advanced-valuation-form");
+
+        // form.elements['status'].value = 'Valuation'; 
+
+        form.submit();
+});
+
+document.getElementById("feedback-submit").addEventListener("click", function (){
+
+        showLoader();
+        var form = document.getElementById("feedback-form");
+
+        // form.elements['status'].value = 'Valuation'; 
+
+        form.submit();
+});
+
+function selectedCategory(){
+
+    var vehicle_category_selected = document.getElementById("category").value;
+    console.log(vehicle_category_selected)
+}
+
+
+
+// window.onload = function() {
+
+//     var status = "{{result_status}}";
+//     if(status){
+
+//         $("#feedback-modal").modal('show');
+//     }
+//     // console.log(status)
+// }
+
+</script>
+{% endblock %}
