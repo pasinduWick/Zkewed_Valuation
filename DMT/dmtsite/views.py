@@ -22,13 +22,13 @@ from django.utils import timezone
 @login_required(login_url='/login')
 def valuation(request):
     
-    transaction = userTransaction(
-        user = request.user,
-        login_time=timezone.now(),
-        visited_page = request.path,
-    )
+    # transaction = userTransaction(
+    #     user = request.user,
+    #     login_time=timezone.now(),
+    #     visited_page = request.path,
+    # )
     
-    transaction.save()
+    # transaction.save()
 
     #client = pymongo.MongoClient('mongodb+srv://dilruksha:Abc123Aa&0@cluster0.ghtk3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',27017)
     client = pymongo.MongoClient("mongodb+srv://zkewed:zkewed123A@vehicalevaluation.d9ufa.mongodb.net/?retryWrites=true&w=majority", 27017)
