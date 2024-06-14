@@ -19,7 +19,7 @@ from scripts.RuleBase import *
 from .models import userTransaction
 from django.utils import timezone
 
-@login_required(login_url='/login')
+# @login_required(login_url='/login')
 def valuation(request):
     
     # transaction = userTransaction(
