@@ -10,7 +10,6 @@ pandas
 imutils
 easyocr==1.7.0
 gdown
-pymongo
 dnspython
 pymongo[srv]
 cdifflib
