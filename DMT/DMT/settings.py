@@ -82,7 +82,8 @@ DATABASES = {
             'NAME': 'userDetails',
             'ENFORCE_SCHEMA': False,
             'CLIENT': {
-                'host': 'mongodb+srv://zkewed:zkewed123A@vehicalevaluation.d9ufa.mongodb.net/?retryWrites=true&w=majority'
+                'host': 'mongodb+srv://zkewed:zkewed123A@vehicalevaluation.d9ufa.mongodb.net/?retryWrites=true&w=majority',
+                'tlsAllowInvalidCertificates': True
             }  
         }
 }
