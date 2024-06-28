@@ -54,7 +54,7 @@ def getRuleBaseDB(vehicle_category,vehicle_make,vehicle_model,vehicle_year,vehic
     #DB = client.get_database('data_store')
     DB = client.get_database('data_store')
 
-    collection = DB.get_collection('vehicle_data_2024_3')
+    collection = DB.get_collection('vehicle_data_processed')
     #mod_collection = DB.get_collection('moderator_data')
     #collection = DB.get_collection('vehical_data')
     print("Connected")
