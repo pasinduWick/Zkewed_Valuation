@@ -37,7 +37,7 @@ def valuation(request):
     DB = client.get_database('data_store')
 
     #collection = DB.get_collection('vehical_data')
-    collection = DB.get_collection('vehicle_data_2024_3')
+    collection = DB.get_collection('vehicle_data_processed')
     mod_collection = DB.get_collection('moderator_data')
 
     vehicle_data = collection.find({})
@@ -85,7 +85,7 @@ def valuation(request):
             text_vehicle_year = request.POST['name_year']
             text_vehicle_purpose = request.POST['purpose']
                  
-            print(text_vehicle_purpose) 
+            # print(text_vehicle_purpose) 
             
             is_advanced = None if request.POST["is_advanced"] == 'false' else True
             is_feedback = None if request.POST["is_feedback"] == 'false' else True
@@ -129,15 +129,25 @@ def valuation(request):
             if is_feedback is None:
                 
                 if is_advanced is not None:
+                    # print("test")
                     text_vehicle_milage = request.POST['milage'] 
                     text_vehicle_gear = request.POST['gear_type'] 
                     text_vehicle_engine_capacity = request.POST['engine_capacity'] + " cc"
                     text_vehicle_fuel_type = request.POST['fuel_type']
                     
+                    text_vehicle_valuation_amount = request.POST['valuation_amount']
+                    text_vehicle_Maximum_amount = request.POST['Maximum_amount']
+                    text_vehicle_Minimum_amount = request.POST['Minimum_amount']
+                    text_vehicle_Mode_amount = request.POST['Mode_amount']
+                    text_vehicle_Mileage_Range = request.POST['Mileage_Range']
+                    text_vehicle_Moderator_amount = request.POST['Moderator_amount']
+
+                    
                     result_vehicle = getRuleBaseDB(text_vehicle_category,text_vehicle_make,text_vehicle_model,
                                                     text_vehicle_year,text_vehicle_milage,text_vehicle_gear,text_vehicle_engine_capacity,text_vehicle_fuel_type,True)
 
                     result_status = "advanced"
+                    # print(result_vehicle)
                 else:
                 
                     # print("test")
@@ -149,11 +159,42 @@ def valuation(request):
                                                     text_vehicle_year)
 
             
-                if len(result_vehicle) is 0:
+                if len(result_vehicle) is 0 and is_advanced is None:
 
                             alert_type = "alert-nodata"
                             alert_msg = "Valuation process error!"  
-                            
+                
+                elif len(result_vehicle) is 0 and is_advanced is not None :
+                    alert_type = "alert-nodata"
+                    alert_msg = "No advanced details found!" 
+                    result_status = "Advanced Valuation Processed" if result_status == 'advanced' else "Valuation Processed"
+                    return render(request, 'valuation.html', {'vehicle_category': vehicle_category,
+                                                            'vehicle_make': vehicle_make,
+                                                            'vehicle_model': vehicle_model,
+                                                            'vehicle_year': vehicle_year,
+                                                            
+                                                            # 'vehicle_milage': text_vehicle_milage,
+                                                            # 'vehicle_gear': text_vehicle_gear,
+                                                            # 'vehicle_engine_capacity': text_vehicle_engine_capacity,
+                                                            # 'vehicle_fuel_type': text_vehicle_fuel_type,
+                                                            
+                                                            'selected_Category':text_vehicle_category,
+                                                            'selected_Make':text_vehicle_make,
+                                                            'selected_Model':text_vehicle_model,
+                                                            'selected_Year':text_vehicle_year,
+                                                            'selected_purpose': text_vehicle_purpose,
+                                                            
+                                                            "alert_type":alert_type,
+                                                            "alert_msg":alert_msg,
+                                                            "result_status":result_status,
+                                                            
+                                                            'valuation_amount':text_vehicle_valuation_amount,
+                                                            'Maximum_amount':text_vehicle_Maximum_amount,
+                                                            'Minimum_amount':text_vehicle_Minimum_amount,
+                                                            'Mode_amount':text_vehicle_Mode_amount,
+                                                            'Mileage_Range':text_vehicle_Mileage_Range,
+                                                            'Moderator_amount':text_vehicle_Moderator_amount
+                                                            })            
                 else:
                     # print(result_vehicle.get('Mileage_Range'))       
                     result_status = "Advanced Valuation Processed" if result_status == 'advanced' else "Valuation Processed"
@@ -192,6 +233,7 @@ def valuation(request):
                                 'vehicle_make': vehicle_make,
                                 'vehicle_model': vehicle_model,
                                 'vehicle_year': vehicle_year,
+                                'selected_purpose': text_vehicle_purpose,
                             
                                 
                                 "alert_type":alert_type,

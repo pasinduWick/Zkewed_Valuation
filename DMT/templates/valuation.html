@@ -58,12 +58,12 @@
                         
                                 <div>
 
-                                    <input type="radio" id="" name="purpose" {% if selected_purpose is not None %} value="{{selected_purpose}}" {% else %} value="Buying" {% endif %}>
+                                    <input type="radio" id="" name="purpose" {% if selected_purpose is not None and selected_purpose == "Buying" %} value="{{selected_purpose}}" {% else %} value="Buying" {% endif %}>
                                     <label for="html">Buying</label><br>
                                 </div>
                                 <div>
                                     
-                                    <input type="radio" id="" name="purpose" {% if selected_purpose is not None %} value="{{selected_purpose}}" {% else %} value="Selling" {% endif %}>
+                                    <input type="radio" id="" name="purpose" {% if selected_purpose is not None and selected_purpose == "Selling" %} value="{{selected_purpose}}" {% else %} value="Selling" {% endif %}>
                                     <label for="html">Selling</label><br>
                                 </div>
                             </div>
@@ -229,6 +229,7 @@
                                         </div>
                                     </div>
                                     <div class="form-box" style="display: none;">
+                                        <input type="text" name="valuation_amount" value={{valuation_amount}}>
                                         <input type="text" name="Maximum_amount" value={{Maximum_amount}}>
                                         <input type="text" name="Minimum_amount" value={{Minimum_amount}}>
                                         <input type="text" name="Mode_amount" value={{Mode_amount}}>
@@ -322,6 +323,14 @@
                                             {% endfor %}
                                         </select> 
                                     </div>
+                                    <div class="valFormBox">
+                                        <input type="text" name="valuation_amount" value={{valuation_amount}}>
+                                        <input type="text" name="Maximum_amount" value={{Maximum_amount}}>
+                                        <input type="text" name="Minimum_amount" value={{Minimum_amount}}>
+                                        <input type="text" name="Mode_amount" value={{Mode_amount}}>
+                                        <input type="text" name="Mileage_Range" value={{Mileage_Range}}>
+                                        <input type="text" name="Moderator_amount" value={{Moderator_amount}}>
+                                    </div>
                                 </div>
                                 <div class="form-box">
                                     <div class="valFormBox">
@@ -357,6 +366,7 @@
                                     </div>
                                 </div>
                                 <input type="text" name="is_advanced" value="true" style="display: none;">
+                                <input type="text" name="purpose" value={{selected_purpose}} style="display: none;">
                                 <input type="text" name="is_feedback" value="false" style="display: none;"> 
                             </form>
                         </div>
