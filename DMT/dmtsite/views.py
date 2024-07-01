@@ -57,6 +57,7 @@ def valuation(request):
 
         except Exception as e :
             print('error in passing data to drop down from the data base')
+            
 
             ex_type, ex_value, ex_traceback = sys.exc_info()           
 
@@ -312,10 +313,10 @@ def valuation(request):
             vehicle_year = collection.distinct('year')
             vehicle_full_db = list(collection.find({}))
 
-            vehicle_list = [{'category': obj['category'], 'make': obj['make'], 'model': obj['model'], 'year': obj['year']} for obj in vehicle_full_db]
-            # print(len(vehicle_list))
+            # vehicle_list = [{'category': obj['category'], 'make': obj['make'], 'model': obj['model'], 'year': obj['year']} for obj in vehicle_full_db]
+            # # print(len(vehicle_list))
             
-            vehicle_details = list({v["model"]:v for v in vehicle_list}.values())
+            # vehicle_details = list({v["model"]:v for v in vehicle_list}.values())
             # print(vehicle_make)
             # print(len(vehicle_details))
             
@@ -332,6 +333,8 @@ def valuation(request):
             print("Exception type : ", ex_type.__name__)
             print("Exception message :", ex_value)
             print("Exception traceback :", ex_traceback)
+            print(e)
+            print(vehicle_category)
             return render(request, "valuation.html",
             {       'vehicle_category': vehicle_category,
                     'vehicle_make': vehicle_make,
@@ -346,7 +349,7 @@ def valuation(request):
 
                                                     'vehicle_make': vehicle_make,
                                                     
-                                                    'vehicle_details': vehicle_details,
+                                                    # 'vehicle_details': vehicle_details,
 
                                                     'vehicle_model': vehicle_model,
 
