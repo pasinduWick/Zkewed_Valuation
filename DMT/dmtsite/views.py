@@ -37,10 +37,10 @@ def valuation(request):
     DB = client.get_database('data_store')
 
     #collection = DB.get_collection('vehical_data')
-    collection = DB.get_collection('vehicle_data_processed')
-    mod_collection = DB.get_collection('moderator_data')
+    collection = DB.get_collection('vehicle_data_2024_3')
+    # mod_collection = DB.get_collection('moderator_data')
 
-    vehicle_data = collection.find({})
+    # vehicle_data = collection.find({})
     
     
     # print('connect DB')
@@ -313,10 +313,10 @@ def valuation(request):
             vehicle_year = collection.distinct('year')
             vehicle_full_db = list(collection.find({}))
 
-            vehicle_list = [{'category': obj['category'], 'make': obj['make'], 'model': obj['model'], 'year': obj['year']} for obj in vehicle_full_db]
+            # vehicle_list = [{'category': obj['category'], 'make': obj['make'], 'model': obj['model'], 'year': obj['year']} for obj in vehicle_full_db]
             # print(len(vehicle_list))
             
-            vehicle_details = list({v["model"]:v for v in vehicle_list}.values())
+            # vehicle_details = list({v["model"]:v for v in vehicle_list}.values())
             # print(vehicle_make)
             # print(len(vehicle_details))
             
