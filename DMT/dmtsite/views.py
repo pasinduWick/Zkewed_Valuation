@@ -349,7 +349,7 @@ def valuation(request):
 
                                                     'vehicle_make': vehicle_make,
                                                     
-                                                    'vehicle_details': vehicle_details,
+                                                    # 'vehicle_details': vehicle_details,
 
                                                     'vehicle_model': vehicle_model,
 
