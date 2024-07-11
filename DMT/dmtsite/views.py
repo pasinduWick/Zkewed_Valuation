@@ -36,7 +36,7 @@ def valuation(request):
     #DB = client.get_database('data_store')
     DB = client.get_database('data_store')
 
-    #collection = DB.get_collection('vehical_data')
+    collection_test = DB.get_collection('make_model')
     collection = DB.get_collection('vehical_data')
     # mod_collection = DB.get_collection('moderator_data')
 
@@ -306,12 +306,13 @@ def valuation(request):
 
     else:
         try:
-            vehicle_category = collection.distinct('category')
+            vehicle_category = collection_test.distinct('category')
             
-            vehicle_make = collection.distinct('make')
-            vehicle_model = collection.distinct('model')
+            vehicle_make = collection_test.distinct('make')
+            vehicle_model = collection_test.distinct('model')
+            # vehicle_year = ['2010','2011']
             vehicle_year = collection.distinct('year')
-            vehicle_full_db = list(collection.find({}))
+            # vehicle_full_db = list(collection.find({}))
 
             # vehicle_list = [{'category': obj['category'], 'make': obj['make'], 'model': obj['model'], 'year': obj['year']} for obj in vehicle_full_db]
             # print(len(vehicle_list))
